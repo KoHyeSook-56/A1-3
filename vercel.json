@@ -1,4 +1,13 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/**/*.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "**",
+      "use": "@vercel/static-build"
+    }
+  ]
 }
