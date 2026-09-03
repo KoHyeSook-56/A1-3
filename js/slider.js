@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (isPlaying) {
       setTimeout(() => {
-        progressFill.style.transition = width ms linear;
+        progressFill.style.transition = `width ${slideDuration}ms linear`;
         progressFill.style.width = '100%';
       }, 50);
     }
