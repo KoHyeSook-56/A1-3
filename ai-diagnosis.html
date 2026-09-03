@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 맞춤진단 | 쵸이셀코리아</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/ai-diagnosis.css">
+</head>
+<body>
+  <header id="header">
+    <div class="header-inner">
+      <h1 class="logo">
+        <a href="index.html">
+          <i class="fa-solid fa-seedling" style="color: #00b4d8;"></i>
+          <span>CHOICELL</span>
+          <span class="logo-badge">BIO</span>
+        </a>
+      </h1>
+      <nav class="gnb">
+        <ul class="depth1">
+          <li><a href="introduce.html">회사소개</a></li>
+          <li><a href="index.html">제품소개</a></li>
+          <li><a href="ai-diagnosis.html" style="color: #00b4d8; font-weight: 700;">AI 맞춤진단</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="diagnosis-main">
+    <div class="diagnosis-header">
+      <h2>AI 바이오 두피 진단</h2>
+      <p>단 1분만에 나의 두피 상태를 진단하고 맞춤형 솔루션을 받아보세요.</p>
+    </div>
+
+    <!-- 진행바 -->
+    <div class="step-indicator">
+      <div class="step-item active">1</div>
+      <div class="step-item">2</div>
+      <div class="step-item">3</div>
+    </div>
+
+    <!-- 에러 노티스 -->
+    <div id="error-notice" class="error-notice">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <span id="error-text"></span>
+    </div>
+
+    <!-- 진단 폼 -->
+    <div id="diagnosis-form-wrap">
+      <!-- Step 1: 두피 타입 -->
+      <div class="form-step active" data-step="1">
+        <h3>STEP 1. 두피 타입을 선택해주세요.</h3>
+        <div class="options-grid">
+          <div class="scalp-option-card">
+            <input type="radio" name="scalpType" value="oily">
+            <span>지성</span>
+          </div>
+          <div class="scalp-option-card">
+            <input type="radio" name="scalpType" value="dry">
+            <span>건성</span>
+          </div>
+          <div class="scalp-option-card">
+            <input type="radio" name="scalpType" value="sensitive">
+            <span>민감성</span>
+          </div>
+          <div class="scalp-option-card">
+            <input type="radio" name="scalpType" value="hairLoss">
+            <span>탈모 진행</span>
+          </div>
+        </div>
+        <button id="btn-next-1" class="btn-primary mt-20">다음 단계</button>
+      </div>
+
+      <!-- Step 2: 주요 고민 -->
+      <div class="form-step" data-step="2">
+        <h3>STEP 2. 주요 고민 증상을 선택해주세요. (다중 선택 가능)</h3>
+        <div class="chips-container">
+          <div class="concern-chip"><input type="checkbox" value="가려움"> 가려움</div>
+          <div class="concern-chip"><input type="checkbox" value="비듬"> 비듬/각질</div>
+          <div class="concern-chip"><input type="checkbox" value="탈모"> 모발 빠짐</div>
+          <div class="concern-chip"><input type="checkbox" value="두피열"> 붉은기/열감</div>
+        </div>
+        <div class="btn-group mt-20">
+          <button id="btn-prev-2" class="btn-secondary">이전</button>
+          <button id="btn-next-2" class="btn-primary">다음 단계</button>
+        </div>
+      </div>
+
+      <!-- Step 3: 추가 정보 -->
+      <div class="form-step" data-step="3">
+        <h3>STEP 3. 추가 정보를 입력해주세요.</h3>
+        <div class="form-group">
+          <label>연령대</label>
+          <div class="radio-group">
+            <label><input type="radio" name="ageGroup" value="20대"> 20대</label>
+            <label><input type="radio" name="ageGroup" value="30대" checked> 30대</label>
+            <label><input type="radio" name="ageGroup" value="40대"> 40대</label>
+            <label><input type="radio" name="ageGroup" value="50대 이상"> 50대 이상</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="dailyHabits">생활 습관</label>
+          <input type="text" id="dailyHabits" class="form-control" placeholder="예: 1일 1회 샴푸">
+        </div>
+        <div class="form-group">
+          <label for="userMemo">추가 메모 (선택)</label>
+          <textarea id="userMemo" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="btn-group mt-20">
+          <button id="btn-prev-3" class="btn-secondary">이전</button>
+          <button id="btn-submit-ai" class="btn-primary submit-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> AI 진단 결과 보기</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 로딩 박스 -->
+    <div id="ai-loading-box" class="loading-box">
+      <div class="spinner"></div>
+      <div class="loading-text">AI 분석 중...</div>
+      <div class="loading-text-sub"></div>
+      <div class="loading-progress">
+        <div class="loading-progress-fill"></div>
+      </div>
+    </div>
+
+    <!-- 결과 화면 -->
+    <div id="diagnosis-result-wrap" class="result-wrap">
+      <div class="result-header">
+        <h3>나의 두피 건강 점수는?</h3>
+        <div class="score-display">
+          <span id="res-score-value">0</span>점
+        </div>
+        <p>두피 타입: <strong id="res-scalp-type"></strong></p>
+        <p id="res-analysis-summary"></p>
+      </div>
+      
+      <div class="result-section">
+        <h4>추천 맞춤 3단계 케어 루틴</h4>
+        <div id="res-routine-timeline"></div>
+      </div>
+
+      <div class="result-section">
+        <h4>추천 제품</h4>
+        <div id="res-products-grid" class="products-grid"></div>
+      </div>
+
+      <div class="result-section">
+        <h4>맞춤 생활 습관 팁</h4>
+        <ul id="res-lifestyle-tips" class="tips-list"></ul>
+      </div>
+
+      <div class="result-section">
+        <h4>연구원 코멘트</h4>
+        <p id="res-specialist-comment" class="comment-box"></p>
+      </div>
+
+      <div class="result-actions">
+        <button id="btn-restart-diagnosis" class="btn-secondary">다시 진단하기</button>
+        <button id="btn-copy-result" class="btn-primary">결과 복사하기</button>
+      </div>
+    </div>
+  </main>
+  
+  <script src="js/ai-service.js"></script>
+</body>
+</html>
